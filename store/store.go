@@ -40,8 +40,8 @@ const TimeLimit = 24 * time.Hour
 // for increasing the pace of program
 // we want to store encoded urls and
 // later retrieve the decoded url
-func AddEncodedURL(short, original, userId string) {
-	err := storeService.redisClient.Set(c, short, original, TimeLimit)
+func AddEncodedURL(short_url, original_url, userId string) {
+	err := storeService.redisClient.Set(c, short_url, original_url, TimeLimit).Err()
 
 	if err != nil {
 		fmt.Sprintf("Failed while saving , the error : %v", err)
@@ -49,8 +49,8 @@ func AddEncodedURL(short, original, userId string) {
 
 }
 
-func GetDecodedURL(short string) string {
-	result, err := storeService.redisClient.Get(c, short).Result()
+func GetDecodedURL(short_url string) string {
+	result, err := storeService.redisClient.Get(c, short_url).Result()
 	if err != nil {
 		fmt.Sprintf("Failed while saving , the error : %v", err)
 		return err.Error()
