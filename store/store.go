@@ -15,8 +15,6 @@ type redisCLI struct {
 var storeService = &redisCLI{}
 var c = context.Background()
 
-const TimeLimit = 24 * time.Hour
-
 func ConnectToRedis() *redisCLI {
 
 	// create redis connection
@@ -35,4 +33,28 @@ func ConnectToRedis() *redisCLI {
 	fmt.Printf("Redis successed")
 	storeService.redisClient = redisClient
 	return storeService
+}
+
+const TimeLimit = 24 * time.Hour
+
+// for increasing the pace of program
+// we want to store encoded urls and
+// later retrieve the decoded url
+func AddEncodedURL(short, original, userId string) {
+	err := storeService.redisClient.Set(c, short, original, TimeLimit)
+
+	if err != nil {
+		fmt.Sprintf("Failed while saving , the error : %v", err)
+	}
+
+}
+
+func GetDecodedURL(short string) string {
+	result, err := storeService.redisClient.Get(c, short).Result()
+	if err != nil {
+		fmt.Sprintf("Failed while saving , the error : %v", err)
+		return err.Error()
+	}
+
+	return result
 }
