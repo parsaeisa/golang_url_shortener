@@ -8,16 +8,16 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-type Cache struct {
+type redisCLI struct {
 	redisClient *redis.Client
 }
 
-var storeService = &Cache{}
+var storeService = &redisCLI{}
 var c = context.Background()
 
 const TimeLimit = 24 * time.Hour
 
-func ConnectToRedis() *Cache {
+func ConnectToRedis() *redisCLI {
 
 	// create redis connection
 	redisClient := redis.NewClient(&redis.Options{
