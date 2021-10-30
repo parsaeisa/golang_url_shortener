@@ -16,6 +16,8 @@ func main() {
 		})
 	})
 
+	r.POST("/get_shortened_url", handler.CreateShortUrl)
+
 	r.GET("/:shortened_url", handler.NavigateToLink)
 
 	store.ConnectToRedis()
