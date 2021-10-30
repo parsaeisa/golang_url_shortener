@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
+	handler "github.com/parsaeisa/technical_test_golang/handlers"
 )
 
 func main() {
@@ -13,6 +14,8 @@ func main() {
 			"message": "first Message",
 		})
 	})
+
+	r.GET("/:shortened_url", handler.NavigateToLink)
 
 	err := r.Run(":8080")
 	if err != nil {
