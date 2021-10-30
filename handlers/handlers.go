@@ -27,3 +27,11 @@ func CreateShortUrl(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusNotFound, gin.H{"shortened_url": base_url + shortened_url})
 }
+
+func NavigateToLink(c *gin.Context) {
+	shortened_url := c.Param("shortened_url")
+
+	original_url := store.GetDecodedURL(shortened_url)
+
+	c.Redirect(302, original_url)
+}
