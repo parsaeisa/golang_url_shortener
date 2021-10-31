@@ -1,11 +1,10 @@
 package store
 
 import (
-	"context"
 	"fmt"
 	"time"
 
-	"github.com/go-redis/redis/v8"
+	"github.com/go-redis/redis"
 )
 
 type redisCLI struct {
@@ -13,19 +12,18 @@ type redisCLI struct {
 }
 
 var storeService = &redisCLI{}
-var c = context.Background()
 
 func ConnectToRedis() *redisCLI {
 
 	// create redis connection
 	redisClient := redis.NewClient(&redis.Options{
-		Addr:     "localhost:8000",
+		Addr:     "localhost:6379",
 		Password: "",
 		DB:       0,
 	})
 
 	//check redis connection
-	_, err := redisClient.Ping(c).Result()
+	_, err := redisClient.Ping().Result()
 	if err != nil {
 		fmt.Sprintf("Redis failed : %v", err)
 	}
@@ -41,7 +39,7 @@ const TimeLimit = 24 * time.Hour
 // we want to store encoded urls and
 // later retrieve the decoded url
 func AddEncodedURL(short_url, original_url, userId string) {
-	err := storeService.redisClient.Set(c, short_url, original_url, TimeLimit).Err()
+	err := storeService.redisClient.Set(short_url, original_url, TimeLimit).Err()
 
 	if err != nil {
 		fmt.Sprintf("Failed while saving , the error : %v", err)
@@ -50,10 +48,10 @@ func AddEncodedURL(short_url, original_url, userId string) {
 }
 
 func GetDecodedURL(short_url string) string {
-	result, err := storeService.redisClient.Get(c, short_url).Result()
+	result, err := storeService.redisClient.Get(short_url).Result()
 	if err != nil {
-		fmt.Sprintf("Failed while saving , the error : %v", err)
-		return err.Error()
+		fmt.Sprintf("Failed while retrieving , the error : %v", err)
+		return "Failed while retrieving , the error :" + err.Error()
 	}
 
 	return result
