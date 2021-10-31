@@ -18,6 +18,8 @@ func TestStoreToRedis(t *testing.T) {
 	short := "http://localhost:8080/s8yQsd"
 	userId := "parsa"
 
+	ConnectToRedis()
+
 	AddEncodedURL(short, original, userId)
 
 	decodedUrl := GetDecodedURL(short)
