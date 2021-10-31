@@ -9,7 +9,7 @@ import (
 )
 
 type request struct {
-	url string
+	URL string
 }
 
 const base_url = "http://localhost:8080/"
@@ -22,10 +22,10 @@ func CreateShortUrl(c *gin.Context) {
 		return
 	}
 
-	shortened_url := shortener.UrlShortener(newRequest.url, "null")
-	store.AddEncodedURL(shortened_url, newRequest.url, "0")
+	shortened_url := shortener.UrlShortener(newRequest.URL, "null")
+	store.AddEncodedURL(shortened_url, newRequest.URL, "0")
 
-	c.IndentedJSON(http.StatusNotFound, gin.H{"shortened_url": base_url + shortened_url})
+	c.IndentedJSON(http.StatusOK, gin.H{"shortened_url": base_url + shortened_url})
 }
 
 func NavigateToLink(c *gin.Context) {
