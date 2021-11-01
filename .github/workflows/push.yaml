@@ -17,6 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Unit Tests        
-        - run : docker pull redis
-        - run : docker run --name redis-test-instance -p 6379:6379 -d redis
-        - run : go test ./...
+      - run : docker pull redis
+      - run : docker run --name redis-test-instance -p 6379:6379 -d redis
+      - run : go test ./...
