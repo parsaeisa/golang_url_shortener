@@ -5,7 +5,7 @@ services :
   server : 
     build :
       context : .
-      dockerfile : Dockerfile
+      dockerfile : docker/Dockerfile
 
     command : ["go" , "run" , "."]
 
