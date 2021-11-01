@@ -1,0 +1,22 @@
+version : "3.7"
+
+services : 
+
+  server : 
+    build :
+      context : .
+      dockerfile : Dockerfile
+
+    command : ["go" , "run" , "."]
+
+    ports:
+      - "8080:8080"
+
+    depends_on : 
+      - redis
+
+  redis :
+    image : "redis:6.2.3"
+    command : "docker run --name redis-test-instance -d redis" 
+    ports:
+    - "6379:6379"
