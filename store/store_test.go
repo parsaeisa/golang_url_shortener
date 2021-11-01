@@ -22,7 +22,7 @@ func TestStoreToRedis(t *testing.T) {
 
 	AddEncodedURL(short, original, userId)
 
-	decodedUrl := GetDecodedURL(short)
+	decodedUrl := GetDecodedURL(short + "some suffix")
 
 	assert.Equal(t, original, decodedUrl)
 
