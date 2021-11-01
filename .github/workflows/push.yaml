@@ -16,8 +16,7 @@ jobs:
     # if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags')
     steps:
       - uses: actions/checkout@v2
-      - name: Run Unit Tests
-        run: 
-        - docker pull redis
-        - docker run --name redis-test-instance -p 6379:6379 -d redis
-        - go test ./...
+      - name: Run Unit Tests        
+        - run : docker pull redis
+        - run : docker run --name redis-test-instance -p 6379:6379 -d redis
+        - run : go test ./...
