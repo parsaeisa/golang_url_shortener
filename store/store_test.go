@@ -1,8 +1,11 @@
 package store
 
 import (
+	"log"
 	"testing"
 
+	"github.com/alicebob/miniredis"
+	"github.com/go-redis/redis"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -18,7 +21,15 @@ func TestStoreToRedis(t *testing.T) {
 	short := "http://localhost:8080/s8yQsd"
 	userId := "parsa"
 
-	ConnectToRedis()
+	mr, err := miniredis.Run()
+
+	if err != nil {
+		log.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	}
+
+	storeService.redisClient = redis.NewClient(&redis.Options{
+		Addr: mr.Addr(),
+	})
 
 	AddEncodedURL(short, original, userId)
 

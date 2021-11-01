@@ -1,0 +1,16 @@
+kind : pipeline 
+type : docker
+name : default
+
+steps : 
+
+- name : redis
+  image : redis
+  commands : 
+  - docker run --name some-redis -p 6379:6379 -d redis
+
+- name : test
+  image : golang
+  commands : 
+  - go build .
+  - go test ./...
