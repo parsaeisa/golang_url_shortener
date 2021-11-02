@@ -8,24 +8,31 @@ import (
 	"github.com/parsaeisa/technical_test_golang/store"
 )
 
-type request struct {
-	URL string
+type Link struct {
+	short_url string
+	Url       string
 }
 
 const base_url = "http://localhost:8080/"
 
+// handler for shortening url in request
+// and return it in response
+// I have binded request to Link structure 
 func CreateShortUrl(c *gin.Context) {
 
-	var newRequest request
+	var link Link
 
-	if err := c.BindJSON(&newRequest); err != nil {
+	if err := c.BindJSON(&link); err != nil {
 		return
 	}
 
-	shortened_url := shortener.UrlShortener(newRequest.URL)
-	store.AddEncodedURL(shortened_url, newRequest.URL)
+	// call urlshortener method to apply encodings 
+	link.short_url = shortener.UrlShortener(link.Url)
 
-	c.IndentedJSON(http.StatusOK, gin.H{"shortened_url": base_url + shortened_url})
+	// store url and its shortened url in redis 
+	store.AddEncodedURL(link.short_url, link.Url)
+
+	c.IndentedJSON(http.StatusOK, gin.H{"shortened_url": base_url + link.short_url})
 }
 
 // handler that is called when user
