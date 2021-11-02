@@ -42,3 +42,7 @@ $ git clone https://github.com/parsaeisa/technical_test_golang
 ```shell script
 $ docker-compose -f docker-compose.yml up --build
 ```
+
+> **NOTE:** Do not forget `sudo` if you are using linux base operating system.
+
+> **NOTE:** if command didn't work , run it twice.
