@@ -2,6 +2,8 @@ version : "3.7"
 
 services : 
 
+  #install app dependencies from app's image
+  # and run it on port 8080 .
   server : 
     build :
       context : .
@@ -12,6 +14,7 @@ services :
     ports:
       - "8080:8080"
 
+  # pull redis image and expose it to port 6379
   redis :
     image : "redis"    
     ports:

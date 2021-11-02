@@ -1,19 +1,15 @@
+# base image that we are using 
 FROM golang:1.17-alpine
 
+# create a directory inside a image
+# this instructs docker to use this 
+# dir as default directory
 WORKDIR /app
 
+# copy dependencies and download them 
 COPY go.mod ./
 COPY go.sum ./
 
 RUN go mod download 
 
 COPY . .
-# Build the Go app
-RUN go build -o ./out/technical-test-golang .
-
-
-# This container exposes port 8080 to the outside world
-EXPOSE 8080
-
-# Run the binary program produced by `go install`
-CMD ["./out/technical-test-golang"]
