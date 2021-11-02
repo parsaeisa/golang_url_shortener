@@ -25,6 +25,9 @@ encodings :
 tests :
 - testify package
 - miniredis package
+
+### branching system with GitFlow 
+
 --------
 
 ### with CI pipeline
