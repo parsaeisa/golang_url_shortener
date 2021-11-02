@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -27,10 +28,17 @@ func CreateShortUrl(c *gin.Context) {
 	}
 
 	// call urlshortener method to apply encodings
-	link.short_url = shortener.UrlShortener(link.Url)
+	validated_url, err := ValidateUrl(link.Url)
+	fmt.Println(validated_url)
+	if err != nil {
+		c.IndentedJSON(http.StatusOK, gin.H{"error": err.Error()})
+		return
+	}
+	fmt.Println(validated_url)
+	link.short_url = shortener.UrlShortener(validated_url)
 
 	// store url and its shortened url in redis
-	store.AddEncodedURL(link.short_url, link.Url)
+	store.AddEncodedURL(link.short_url, validated_url)
 
 	c.IndentedJSON(http.StatusOK, gin.H{"shortened_url": base_url + link.short_url})
 }
@@ -42,12 +50,7 @@ func NavigateToLink(c *gin.Context) {
 	shortened_url := c.Param("shortened_url")
 	original_url := store.GetDecodedURL(shortened_url)
 
-	validated_url, err := ValidateUrl(original_url)
-	if err != nil {
-		c.IndentedJSON(http.StatusOK, gin.H{"error": err})
-	}
-
-	c.Redirect(302, validated_url)
+	c.Redirect(302, original_url)
 }
 
 func WelcomePage(c *gin.Context) {
