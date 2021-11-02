@@ -7,9 +7,8 @@ import (
 )
 
 func TestEncoder(t *testing.T) {
-	userId := "e0dba740-fc4b-4977-872c-d360239e6b1a"
-	original_url := "https://www.eddywm.com/lets-build-a-url-shortener-in-go-with-redis-part-2-storage-layer/"
-	short_url := UrlShortener(original_url, userId)
+	original_url := "https://club.snapp.ir/radio-snapp/newseason/"
+	short_url := UrlShortener(original_url)
 
 	assert.Equal(t, short_url, "d66yfx7NNw7")
 
