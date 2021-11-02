@@ -27,7 +27,7 @@ tests :
 - miniredis package
 
 ### branching system with GitFlow 
-
+> **NOTE:** basically I should delete branches which I created except main and develop  , but I didn't for my branching system being observable  . 
 --------
 
 ### with CI pipeline
