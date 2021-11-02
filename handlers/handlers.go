@@ -22,7 +22,7 @@ func CreateShortUrl(c *gin.Context) {
 		return
 	}
 
-	shortened_url := shortener.UrlShortener(newRequest.URL, "null")
+	shortened_url := shortener.UrlShortener(newRequest.URL)
 	store.AddEncodedURL(shortened_url, newRequest.URL)
 
 	c.IndentedJSON(http.StatusOK, gin.H{"shortened_url": base_url + shortened_url})
