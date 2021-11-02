@@ -10,6 +10,6 @@ func TestEncoder(t *testing.T) {
 	original_url := "https://club.snapp.ir/radio-snapp/newseason/"
 	short_url := UrlShortener(original_url)
 
-	assert.Equal(t, short_url, "d66yfx7NNw7")
+	assert.Equal(t, short_url, "JBfAuUweaVY")
 
 }
