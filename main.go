@@ -10,11 +10,10 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "first Message",
-		})
-	})
+
+	r.LoadHTMLGlob("html/*")
+
+	r.GET("/", handler.WelcomePage)
 
 	r.POST("/get_shortened_url", handler.CreateShortUrl)
 
