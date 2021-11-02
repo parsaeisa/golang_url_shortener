@@ -25,8 +25,8 @@ func base58Encoded(bytes []byte) string {
 	return string(encoded)
 }
 
-func UrlShortener(original_url, userId string) string {
-	urlHashBytes := sha256Of(original_url + userId)
+func UrlShortener(original_url string) string {
+	urlHashBytes := sha256Of(original_url)
 	generate_number := new(big.Int).SetBytes(urlHashBytes).Uint64()
 
 	short_url := base58Encoded([]byte(fmt.Sprintf("%d", generate_number)))
