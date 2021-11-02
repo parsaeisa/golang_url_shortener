@@ -19,8 +19,8 @@ func TestRedisConnection(t *testing.T) {
 func TestStoreToRedis(t *testing.T) {
 	original := "https://club.snapp.ir/radio-snapp/newseason/"
 	short := "http://localhost:8080/s8yQsd"
-	userId := "parsa"
 
+	// make connections to mocked redis
 	mr, err := miniredis.Run()
 
 	if err != nil {
@@ -31,7 +31,8 @@ func TestStoreToRedis(t *testing.T) {
 		Addr: mr.Addr(),
 	})
 
-	AddEncodedURL(short, original, userId)
+	// calling store methods
+	AddEncodedURL(short, original)
 
 	decodedUrl := GetDecodedURL(short)
 
