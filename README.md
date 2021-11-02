@@ -13,10 +13,24 @@ for example in
 "http://localhost:8080/cKHeYx6rabt"
 wich the last part is shortened url , it will automatically redirect to original url
 
-I used redis for caching data and gin-gonic framework for http requests.
-also for encoding I used base85 and MG5 hash system .
+--------
+stacks :
+- gin-gonic framework
+- redis 
+- docker 
 
-with tests . 
+encodings :
+- base58 bitcoin encoding
+
+tests :
+- testify package
+- miniredis package
+--------
+
+### with CI pipeline
+in github actions 
+
+--------
 
 ## Run Server
 - Clone the repository
@@ -24,12 +38,7 @@ with tests .
 $ git clone https://github.com/parsaeisa/technical_test_golang
 ```
 
-- Install dependencies 
+- Run docker composer 
 ```shell script
-$ go get .
-```
-
-- Run the server
-```shell script
-$ go run .
+$ docker-compose -f docker-compose.yml up --build
 ```

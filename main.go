@@ -9,20 +9,20 @@ import (
 )
 
 func main() {
-	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "first Message",
-		})
-	})
+	//define router
+	router := gin.Default()
 
-	r.POST("/get_shortened_url", handler.CreateShortUrl)
+	// load html files
+	router.LoadHTMLGlob("html/*")
 
-	r.GET("/:shortened_url", handler.NavigateToLink)
+	// routings
+	router.GET("/", handler.WelcomePage)
+	router.POST("/get_shortened_url", handler.CreateShortUrl)
+	router.GET("/:shortened_url", handler.NavigateToLink)
 
 	store.ConnectToRedis()
 
-	err := r.Run(":8080")
+	err := router.Run(":8080")
 	if err != nil {
 		panic(fmt.Sprintf("Failed"))
 	}
