@@ -38,6 +38,10 @@ const TimeLimit = 24 * time.Hour
 // for increasing the pace of program
 // we want to store encoded urls and
 // later retrieve the decoded url
+
+// we store shortened urls and its original
+// in redis caching system . the records will
+// be deleted after 1 day .
 func AddEncodedURL(short_url, original_url, userId string) {
 	err := storeService.redisClient.Set(short_url, original_url, TimeLimit).Err()
 
@@ -47,6 +51,7 @@ func AddEncodedURL(short_url, original_url, userId string) {
 
 }
 
+// retrive original url from redis .
 func GetDecodedURL(short_url string) string {
 	result, err := storeService.redisClient.Get(short_url).Result()
 	if err != nil {
