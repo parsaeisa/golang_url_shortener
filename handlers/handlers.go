@@ -40,10 +40,14 @@ func CreateShortUrl(c *gin.Context) {
 func NavigateToLink(c *gin.Context) {
 
 	shortened_url := c.Param("shortened_url")
-
 	original_url := store.GetDecodedURL(shortened_url)
 
-	c.Redirect(302, original_url)
+	validated_url, err := ValidateUrl(original_url)
+	if err != nil {
+		c.IndentedJSON(http.StatusOK, gin.H{"error": err})
+	}
+
+	c.Redirect(302, validated_url)
 }
 
 func WelcomePage(c *gin.Context) {
