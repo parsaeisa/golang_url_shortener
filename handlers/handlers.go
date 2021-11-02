@@ -17,7 +17,7 @@ const base_url = "http://localhost:8080/"
 
 // handler for shortening url in request
 // and return it in response
-// I have binded request to Link structure 
+// I have binded request to Link structure
 func CreateShortUrl(c *gin.Context) {
 
 	var link Link
@@ -26,10 +26,10 @@ func CreateShortUrl(c *gin.Context) {
 		return
 	}
 
-	// call urlshortener method to apply encodings 
+	// call urlshortener method to apply encodings
 	link.short_url = shortener.UrlShortener(link.Url)
 
-	// store url and its shortened url in redis 
+	// store url and its shortened url in redis
 	store.AddEncodedURL(link.short_url, link.Url)
 
 	c.IndentedJSON(http.StatusOK, gin.H{"shortened_url": base_url + link.short_url})
@@ -44,4 +44,8 @@ func NavigateToLink(c *gin.Context) {
 	original_url := store.GetDecodedURL(shortened_url)
 
 	c.Redirect(302, original_url)
+}
+
+func WelcomePage(c *gin.Context) {
+	c.HTML(http.StatusOK, "WelcomePage.html", gin.H{})
 }
