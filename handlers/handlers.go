@@ -23,12 +23,15 @@ func CreateShortUrl(c *gin.Context) {
 	}
 
 	shortened_url := shortener.UrlShortener(newRequest.URL, "null")
-	store.AddEncodedURL(shortened_url, newRequest.URL, "0")
+	store.AddEncodedURL(shortened_url, newRequest.URL)
 
 	c.IndentedJSON(http.StatusOK, gin.H{"shortened_url": base_url + shortened_url})
 }
 
+// handler that is called when user
+// gets into shortened url
 func NavigateToLink(c *gin.Context) {
+
 	shortened_url := c.Param("shortened_url")
 
 	original_url := store.GetDecodedURL(shortened_url)
