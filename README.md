@@ -1,6 +1,6 @@
-# technical_test_golang
+## Url shortener backend server
 
-## URL shortener , written in golang 
+### written in golang 
 it has two api's : 
 
 
